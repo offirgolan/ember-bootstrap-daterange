@@ -8,7 +8,7 @@ module.exports = {
     var that = this;
 
     return this.addBowerPackageToProject('moment').then(function() {
-      return that.addBowerPackageToProject('bootstrap-daterangepicker');
+      return that.addBowerPackageToProject('bootstrap-daterangepicker', '~2.1.13');
     });
   }
 

@@ -9,6 +9,6 @@ module.exports = {
 
     this.app.import(app.bowerDirectory + '/moment/moment.js');
     this.app.import(app.bowerDirectory + '/bootstrap-daterangepicker/daterangepicker.js');
-    this.app.import(app.bowerDirectory + '/bootstrap-daterangepicker/daterangepicker-bs3.css');
+    this.app.import(app.bowerDirectory + '/bootstrap-daterangepicker/daterangepicker.css');
   }
 };

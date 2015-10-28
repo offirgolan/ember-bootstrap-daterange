@@ -1,28 +1,30 @@
 import Ember from 'ember';
 
 var jqueryAttrs = [
-  'startDate',
-  'endDate',
-  'minDate',
-  'maxDate',
-  'dateLimit',
-  'timeZone',
-  'showDropdowns',
-  'showWeekNumbers',
-  'timePicker',
-  'timePickerIncrement',
-  'timePicker12Hour',
-  'timePickerSeconds',
-  'ranges',
-  'opens',
-  'buttonClasses',
-  'applyClass',
-  'cancelClass',
-  'format',
-  'separator',
-  'locale',
-  'singleDatePicker',
-  'parentEl'
+ 'startDate',
+ 'endDate',
+ 'minDate',
+ 'maxDate',
+ 'dateLimit',
+ 'showDropdowns',
+ 'showWeekNumbers',
+ 'timePicker',
+ 'timePickerIncrement',
+ 'timePicker24Hour',
+ 'timePickerSeconds',
+ 'ranges',
+ 'opens',
+ 'drops',
+ 'buttonClasses',
+ 'applyClass',
+ 'cancelClass',
+ 'locale',
+ 'singleDatePicker',
+ 'autoApply',
+ 'linkedCalendars',
+ 'parentEl',
+ 'isInvalidDate',
+ 'autoUpdateInput'
 ];
 
 export default Ember.Component.extend({
@@ -30,7 +32,13 @@ export default Ember.Component.extend({
 
   jQueryOptions: Ember.computed(jqueryAttrs.join(','), function() {
     var options = {};
+    var optionsObj = this.get('options');
     var self = this;
+
+    // Allows user to pass an entire config object
+    if(!Ember.isNone(optionsObj) && typeof optionsObj === 'object') {
+      return optionsObj;
+    }
 
     jqueryAttrs.forEach(function(attr) {
       options[attr] = self.get(attr);
@@ -69,26 +77,16 @@ export default Ember.Component.extend({
   },
 
   _setOptions: function() {
-    var currentComponent = this;
-    var changeCallback = function(start, end, label) {
-
-      currentComponent.set('startDate', start);
-      currentComponent.set('endDate', end);
-    };
     if (this.state === 'inDOM') {
-      var dateRangePickerObject = this.$().data('daterangepicker');
-      if (dateRangePickerObject) {
-        dateRangePickerObject.setOptions(this.get('jQueryOptions'),
-          changeCallback);
-      }
+      this.$().daterangepicker(this.get('jQueryOptions'));
     }
   },
 
-  startDateDidChange: Ember.observer('startDate',function() {
+  startDateDidChange: Ember.observer('jQueryOptions.startDate',function() {
     Ember.run.once(this, this._setStart);
   }),
 
-  endDateDidChange: Ember.observer('endDate',function() {
+  endDateDidChange: Ember.observer('jQueryOptions.endDate',function() {
     Ember.run.once(this, this._setEnd);
 
   }),
