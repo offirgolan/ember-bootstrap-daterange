@@ -18,7 +18,7 @@ Single date picker with value bound.
 
 Passing entire options object
 ```handlebars
-  {{bootstrap-daterange-picker options=opts}}
+  {{bootstrap-daterange-picker startDate=start endDate=end options=opts}}
 ```
 
 For more information on using ember-cli, visit [http://www.ember-cli.com/](http://www.ember-cli.com/).
