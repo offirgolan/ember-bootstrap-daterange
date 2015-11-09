@@ -37,9 +37,11 @@ export default Ember.Component.extend({
 
     // Allows user to pass an entire config object
     if (!Ember.isNone(optionsObj) && typeof optionsObj === 'object') {
-      optionsObj.startDate = this.get('startDate');
-      optionsObj.endDate = this.get('endDate');
-      return optionsObj;
+      Object.keys(optionsObj).forEach(function(o) {
+        if(jqueryAttrs.indexOf(o) !== -1) {
+          self.set(o, optionsObj[o]);
+        }
+      });
     }
 
     jqueryAttrs.forEach(function(attr) {
