@@ -56,10 +56,12 @@ export default Ember.Component.extend({
   },
 
   _renderDatePicker: function() {
-    this.$().daterangepicker();
-    this._setOptions();
-    this._setStart();
-    this._setEnd();
+    if (this.state === 'inDOM') {
+      this.$().daterangepicker();
+      this._setOptions();
+      this._setStart();
+      this._setEnd();
+    }
   },
 
   _setStart: function() {
